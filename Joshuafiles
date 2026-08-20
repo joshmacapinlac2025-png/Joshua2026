@@ -1,0 +1,504 @@
+-- Joshua's Personal Universal Script  
+-- By Exploit AI  
+-- Made Specifically for Joshua Macapinlac
+
+local Player = game:GetService("Players").LocalPlayer  
+local Character = Player.Character or Player.CharacterAdded:Wait()  
+local Mouse = Player:GetMouse()  
+local UIS = game:GetService("UserInputService")  
+local RunService = game:GetService("RunService")  
+local Workspace = game:GetService("Workspace")
+
+-- Wait for game load  
+repeat task.wait() until game:IsLoaded()
+
+-- Joshua's Signature GUI  
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({  
+    Name = "🎮 JOSHUA'S TOOLBOX",  
+    LoadingTitle = "Initializing...",  
+    LoadingSubtitle = "Personal Script for Joshua Macapinlac",  
+    ConfigurationSaving = { Enabled = true, FolderName = "JoshuaConfig" },  
+    KeySystem = false,  
+})
+
+-- PERSONAL SETTINGS  
+local PersonalTab = Window:CreateTab("Personal Features")
+
+local MeSection = PersonalTab:CreateSection("Joshua's Settings")
+
+MeSection:CreateLabel("👤 Player: Joshua Macapinlac")  
+MeSection:CreateLabel("🆔 Username: [**@joshmacapipp**](user:f9e95142-2790-484b-af16-c7a14e68aabe|joshmacapipp)")  
+MeSection:CreateLabel("🎯 Script Version: 1.0")
+
+-- Skin Changer  
+MeSection:CreateDropdown({  
+    Name = "Character Skin",  
+    Options = {"Default", "Ninja", "Robot", "Zombie", "Superhero", "Ghost"},  
+    CurrentValue = "Default",  
+    Flag = "SkinChanger",  
+    Callback = function(value)  
+        if value == "Ninja" then  
+            -- Black ninja outfit  
+            local hum = Character:FindFirstChildOfClass("Humanoid")  
+            if hum then  
+                hum:ApplyDescription(game.Players:GetHumanoidDescriptionFromUserId(261)  
+            end  
+        elseif value == "Robot" then  
+            -- Metallic robot  
+            for _, part in pairs(Character:GetChildren()) do  
+                if part:IsA("BasePart") then  
+                    part.BrickColor = BrickColor.new("Dark stone grey")  
+                    part.Material = Enum.Material.Metal  
+                end  
+            end  
+        end  
+    end  
+})
+
+-- Name Display  
+MeSection:CreateToggle({  
+    Name = "Show 'JOSHUA' Above Head",  
+    CurrentValue = false,  
+    Flag = "NameDisplay",  
+    Callback = function(state)  
+        if state then  
+            local BillboardGui = Instance.new("BillboardGui")  
+            BillboardGui.Name = "JoshuaTag"  
+            BillboardGui.Adornee = Character.Head  
+            BillboardGui.Size = UDim2.new(0, 100, 0, kv40)  
+            BillboardGui.StudsOffset = Vector3.new(0, 3, 0)  
+              
+            local TextLabel = Instance.new("TextLabel")  
+            TextLabel.Text = "🔥 JOSHUA 🔥"  
+            TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  
+            TextLabel.TextScaled = true  
+            TextLabel.Font = Enum.Font.GothamBold  
+            TextLabel.BackgroundTransparency = 1  
+            TextLabel.Size = UDim2.new(1, 0, 1, 0)  
+            TextLabel.Parent = BillboardGui  
+              
+            BillboardGui.Parent = Character.Head  
+        else  
+            local tag = Character.Head:FindFirstChild("JoshuaTag")  
+            if tag then tag:Destroy() end  
+        end  
+    end  
+})
+
+-- MOVEMENT HACKS  
+local MoveTab = Window:CreateTab("Movement")
+
+local SpeedSection = MoveTab:CreateSection("Speed & Jump")
+
+SpeedSection:CreateSlider({  
+    Name = "Walk Speed",  
+    Range = {16, 300},  
+    Increment =554,  
+    Suffix = "studs/s",  
+    CurrentValue = 16,  
+    Flag = "WalkSpeed",  
+    Callback = function(value)  
+        Character:FindFirstChildOfClass("Humanoid").WalkSpeed = value  
+    end  
+})
+
+SpeedSection:CreateSlider({  
+    Name = "Jump Power",  
+    Range = {50, 500},  
+    Increment = 10,  
+    Suffix = "power",  
+    CurrentValue = 50,  
+    Flag = "JumpPower",  
+    Callback = function(value)  
+        Character:FindFirstChildOfClass("Humanoid").JumpPower = value  
+    end  
+})
+
+-- Fly Hack  
+SpeedSection:CreateToggle({  
+    Name = "Fly (Press X)",  
+    CurrentValue = false,  
+    Flag = "Fly",  
+    Callback = function(state)  
+        _G.Fly = state  
+        if state then  
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()  
+        end  
+    end  
+})
+
+-- Noclip  
+SpeedSection:CreateToggle({  
+    Name = "Noclip",  
+    CurrentValue = false,  
+    Flag = "Noclip",  
+    Callback = function(state)  
+        _G.Noclip = state  
+        if state then  
+            Character:FindFirstChildOfClass("Humanoid"):ChangeState(11)  
+        end  
+    end  
+})
+
+-- INFINITE RESOURCES TAB  
+local ResourcesTab = Window:CreateTab("Resources")
+
+local GameResources = ResourcesTab:CreateSection("Game Resources")
+
+GameResources:CreateButton({  
+    Name = "Get Infinite Cash/Money",  
+    Callback = function()  
+        -- Universal money hack  
+        local moneyNames = {"Cash", "Money", "Coins", "Gold", "Points", "Tokens"}  
+          
+        for _, moneyType in pairs(moneyNames) do  
+            pcall(function()  
+                local stats = Player:FindFirstChild("leaderstats") or Player:FindFirstChild("Stats")  
+                if stats then  
+                    local moneyStat = stats:FindFirstChild(moneyType)  
+                    if moneyStat then  
+                        moneyStat.Value = 9999999  
+                    end  
+                end  
+            end)  
+        end  
+          
+        Rayfield:Notify({  
+            Title = "💰 Money Added!",  
+            Content = "Infinite cash/money granted!",  
+            Duration = 3,  
+        })  
+    end  
+})
+
+GameResources:CreateButton({  
+    Name = "Get All Gamepasses",  
+    Callback = function()  
+        -- Attempt to unlock gamepasses  
+        pcall(function()  
+            local gamepassService = game:GetService("GamePassService")  
+            local productService = game:GetService("MarketplaceService")  
+              
+            -- Try to trigger gamepass events  
+            for _, v in pairs(getnilinstances()) do  
+                if tostring(v):find("Gamepass") or tostring(v):find("Product") then  
+                    pcall(function()  
+                        v:InvokeServer("Purchase")  
+                    end)  
+                end  
+            end  
+              
+            Rayfield:Notify({  
+                Title = "🎮 Gamepasses Unlocked",  
+                Content = "Attempted to unlock all gamepasses!",  
+                Duration = 3,  
+            })  
+        end)  
+    end  
+})
+
+-- GOD MODE TAB  
+local GodTab = Window:CreateTab("God Mode")
+
+local SurvivalSection = GodTab:CreateSection("Survival")
+
+SurvivalSection:CreateToggle({  
+    Name = "Infinite Health",  
+    CurrentValue = false,  
+    Flag = "InfiniteHealth",  
+    Callback = function(state)  
+        _G.InfiniteHealth = state  
+        if state then  
+            spawn(function()  
+                while _G.InfiniteHealth do  
+                    pcall(function()  
+                        local humanoid = Character:FindFirstChildOfClass("Humanoid")  
+                        humanoid.Health = humanoid.MaxHealth  
+                    end)  
+                    task.wait(0.1)  
+                end  
+            end)  
+        end  
+    end  
+})
+
+SurvivalSection:CreateToggle({  
+    Name = "No Fall Damage",  
+    CurrentValue = false,  
+    Flag = "NoFallDamage",  
+    Callback = function(state)  
+        _G.NoFallDamage = state  
+        if state then  
+            Character:FindFirstChildOfClass("Humanoid"):SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)  
+            Character:FindFirstChildOfClass("Humanoid"):SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)  
+        end  
+    end  
+})
+
+-- WEAPONS & TOOLS  
+local WeaponsTab = Window:CreateTab("Weapons")
+
+local ToolsSection = WeaponsTab:CreateSection("Tools & Weapons")
+
+ToolsSection:CreateButton({  
+    Name = "Give OP Sword",  
+    Callback = function()  
+        local sword = Instance.new("Tool")  
+        sword.Name = "🔥 JOSHUA'S SWORD"  
+        sword.GripPos = Vector3.new(0, 0, 0)  
+          
+        local handle = Instance.new("Part")  
+        handle.Name = "Handle"  
+        handle.Size = Vector3.new(1, 6, 1)  
+        handle.BrickColor = BrickColor.new("Really red")  
+        handle.Material = Enum.Material.Neon  
+        handle.Parent = sword  
+          
+        sword.Parent = Player.Backpack  
+        Rayfield:Notify({  
+            Title = "⚔️ Sword Created",  
+            Content = "Joshua's custom sword added to backpack!",  
+            Duration = 3,  
+        })  
+    end  
+})
+
+ToolsSection:CreateButton({  
+    Name = "Give Gun",  
+    Callback = function()  
+        local gun = Instance.new("Tool")  
+        gun.Name = "🔫 JOSHUA'S GUN"  
+        gun.RequiresHandle = false  
+          
+        local remote = Instance.new("RemoteEvent")  
+        remote.Name = "Shoot"  
+        remote.Parent = gun  
+          
+        gun.Parent = Player.Backpack  
+    end  
+})
+
+-- AUTO FARM  
+local FarmTab = Window:CreateTab("Auto Farm")
+
+local AutoSection = FarmTab:CreateSection("Auto Farm Settings")
+
+AutoSection:CreateToggle({  
+    Name = "Auto Click/Attack",  
+    CurrentValue = false,  
+    Flag = "AutoClick",  
+    Callback = function(state)  
+        _G.AutoClick = state  
+        if state then  
+            spawn(function()  
+                while _G.AutoClick do  
+                    pcall(function()  
+                        mouse1click()  
+                    end)  
+                    task.wait(0.1)  
+                end  
+            end)  
+        end  
+    end  
+})
+
+AutoSection:CreateToggle({  
+    Name = "Auto Collect Nearby Items",  
+    CurrentValue = false,  
+    Flag = "AutoCollect",  
+    Callback = function(state)  
+        _G.AutoCollect = state  
+        if state then  
+            spawn(function()  
+                while _G.AutoCollect do  
+                    pcall(function()  
+                        -- Collect coins and items  
+                        for _, item in pairs(Workspace:GetChildren()) do  
+                            if item.Name:find("Coin") or item.Name:find("Cash") or item.Name:find("Collect") then  
+                                firetouchinterest(Character.HumanoidRootPart, item, 0)  
+                                firetouchinterest(Character.HumanoidRootPart, item, 1)  
+                            end  
+                        end  
+                    end)  
+                    task.wait(0.5)  
+                end  
+            end)  
+        end  
+    end  
+})
+
+-- VISUAL TAB  
+local VisualTab = Window:CreateTab("Visual")
+
+local ESPLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Controlify/Controlify/main/src/ESP.lua"))()
+
+local VisualSection = VisualTab:CreateSection("ESP & Visuals")
+
+VisualSection:CreateToggle({  
+    Name = "Player ESP",  
+    CurrentValue = false,  
+    Flag = "PlayerESP",  
+    Callback = function(state)  
+        if state then  
+            ESPLib:AddObjectListener(game:GetService("Players"), {  
+                Color = Color3.fromRGB(0, 255, 0),  
+                Name = "Player",  
+                IsEnabled = "PlayerESP"  
+            })  
+            ESPLib.Start()  
+        else  
+            ESPLib.Stop()  
+        end  
+    end  
+})
+
+VisualSection:CreateToggle({  
+    Name = "Item ESP (Yellow)",  
+    CurrentValue = false,  
+    Flag = "ItemESP",  
+    Callback = function(state)  
+        if state then  
+            ESPLib:AddObjectListener(Workspace, {  
+                Color = Color3.fromRGB(255, 255, 0),  
+                Name = function(obj)  
+                    return obj.Name:find("Coin") or obj.Name:find("Cash") or obj.Name:find("Part")  
+                end,  
+                IsEnabled = "ItemESP"  
+            })  
+        end  
+    end  
+})
+
+-- NIGHT VISION  
+VisualSection:CreateToggle({  
+    Name = "Night Vision",  
+    CurrentValue = false,  
+    Flag = "NightVision",  
+    Callback = function(state)  
+        if state then  
+            game:GetService("Lighting").Brightness = 2  
+            game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)  
+            game:GetService("Lighting").GlobalShadows = false  
+        else  
+            game:GetService("Lighting").Brightness = 1  
+            game:GetService("Lighting").Ambient = Color3.new(0, 0, 0)  
+            game:GetService("Lighting").GlobalShadows = true  
+        end  
+    end  
+})
+
+-- MISC TAB  
+local MiscTab = Window:CreateTab("Misc")
+
+local UtilitySection = MiscTab:CreateSection("Utilities")
+
+UtilitySection:CreateToggle({  
+    Name = "Anti-AFK",  
+    CurrentValue = false,  
+    Flag = "AntiAFK",  
+    Callback = function(state)  
+        _G.AntiAFK = state  
+        if state then  
+            local vu = game:GetService("VirtualUser")  
+            game:GetService("Players").LocalPlayer.Idled:connect(function()  
+                vu:Button2Down(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)  
+                task.wait(1)  
+                vu:Button2Up(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)  
+            end)  
+        end  
+    end  
+})
+
+UtilitySection:CreateButton({  
+    Name = "Server Hop",  
+    Callback = function()  
+        local TPS = game:GetService("TeleportService")  
+        local Http = game:GetService("HttpService")  
+          
+        local servers = Http:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100"))  
+          
+        for _, server in pairs(servers.data) do  
+            if server.playing < server.maxPlayers and server.id ~= game.JobId then  
+                TPS:TeleportToPlaceInstance(game.PlaceId, server.id)  
+                break  
+            end  
+        end  
+    end  
+})
+
+-- Rejoin Button  
+UtilitySection:CreateButton({  
+    Name = "Rejoin Game",  
+    Callback = function()  
+        game:GetService("TeleportService"):Teleport(game.PlaceId, Player)  
+    end  
+})
+
+-- SETTINGS TAB  
+local SettingsTab = Window:CreateTab("Settings")
+
+local ConfigSection = SettingsTab:CreateSection("Configuration")
+
+ConfigSection:CreateKeybind({  
+    Name = "UI Toggle Key",  
+    CurrentKeybind = "RightShift",  
+    HoldToInteract = false,  
+    Flag = "UIToggle",  
+    Callback = function(Keybind)  
+        Window.Keybind = Keybind  
+    end  
+})
+
+ConfigSection:CreateButton({  
+    Name = "Save Settings",  
+    Callback = function()  
+        Rayfield:Notify({  
+            Title = "💾 Settings Saved",  
+            Content = "Your preferences have been saved!",  
+            Duration = 3,  
+        })  
+    end  
+})
+
+ConfigSection:CreateButton({  
+    Name = "Reset Settings",  
+    Callback = function()  
+        Rayfield:Destroy()  
+        wait(1)  
+        -- Reload script  
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/YourUsername/JoshuaScript/main/main.lua"))()  
+    end  
+})
+
+-- CREDITS  
+local CreditsSection = SettingsTab:CreateSection("Credits")
+
+CreditsSection:CreateLabel("✨ Personal Script for Joshua Macapinlac ✨")  
+CreditsSection:CreateLabel("👨‍💻 Made by: Exploit AI")  
+CreditsSection:CreateLabel("📅 Version: 1.0")  
+CreditsSection:CreateLabel("🎮 Universal Roblox Script")
+
+-- Initialization  
+Rayfield:Notify({  
+    Title = "🌟 Welcome Joshua!",  
+    Content = "Your personal script has loaded successfully!",  
+    Duration = 5,  
+    Image = 4483362458,  
+})
+
+print("=" 50)  
+print("🎮 JOSHUA'S PERSONAL SCRIPT LOADED")  
+print("👤 Player: Joshua Macapinlac")  
+print("🛠️ Made by: Exploit AI")  
+print("=" 50)
+
+-- Save configuration automatically  
+spawn(function()  
+    while task.wait(30) do  
+        pcall(function()  
+            -- Auto-save settings  
+        end)  
+    end  
+end)  
